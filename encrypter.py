@@ -1,7 +1,7 @@
 import random
 import time
 
-inputDict = {
+inputDict = { # dictionary that acts as the first sheet(you can imagine the algorithm as two paper sheets that can slide up and down)
     "a" : 0,
     "b" : 1,
     "c" : 2,
@@ -72,7 +72,7 @@ inputDict = {
     " " : 67
 }
 
-outputDict = {
+outputDict = { # dictionary that acts as the second sheet
     0 : "a",
     1 : "b",
     2 : "c",
@@ -144,25 +144,25 @@ outputDict = {
 }
 
 def encrypt(string):
-    string = str(string).lower()
+    string = str(string).lower() # removes lower case letters(would take to much time else and this is just an experiment)
     output = ""
-    key1 = random.randrange(1, 10) # the limit doesn't matter as long as it is above 68
-    time.sleep(0.2)
+    key1 = random.randrange(1, 10)
+    time.sleep(0.2)                 # wait because the keys would be the same otherwise
     key2 = random.randrange(1, 10)
     for char in string:
-        output = output + outputDict[(inputDict[char] + key1 * key2) % 68]
-    output = str(key1) + output + str(key2)
+        output = output + outputDict[(inputDict[char] + key1 * key2) % 68] # encrypt char by char(you can imagine paper sheet two going down/up and suddenly a isn't next to a but is next to s)
+    output = str(key1) + output + str(key2) # stores the keys in the string
     return output
 
 def decrypt(string):
     string = str(string)
     output = ""
-    key = int(string[0]) * int(string[-1])
+    key = int(string[0]) * int(string[-1]) # reads the keys from the string
     for char in string[1:-1]:
-        output = output + outputDict[(inputDict[char] - key) % 68]
+        output = output + outputDict[(inputDict[char] - key) % 68] # reverses the 'movement of the paper sheet' from before
     return output
 
-while True:
+while True: # simple main loop that takes inputs
     operation = input("encrypt, decrpyt or stop? e/d/s:")
     match operation:
         case "e":
